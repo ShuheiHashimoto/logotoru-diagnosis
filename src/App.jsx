@@ -383,6 +383,7 @@ const ResultScreen = ({ score, onRestart }) => {
   const result = getResult(score);
   const maxScore = 75;
   const pct = Math.round((score / maxScore) * 100);
+  useState(() => { fetch(GAS_URL, { method: "POST", body: JSON.stringify({ score, result_type: result.type, danger_level: result.danger, user_agent: navigator.userAgent }), mode: "no-cors" }).catch(() => {}); }, []);
   const cardRef = useRef(null);
   const [shared, setShared] = useState(false);
 
