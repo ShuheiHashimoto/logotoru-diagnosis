@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzzs98F0KjbeAZtQ07K3RtCdL8AeUrsVzvihAKXrONhb7KSmQDnQ37-0mer-sxtWWfESg/exec";
+
 const STEPS = [
   {
     title: "営業思想",
@@ -383,9 +385,18 @@ const ResultScreen = ({ score, onRestart }) => {
   const result = getResult(score);
   const maxScore = 75;
   const pct = Math.round((score / maxScore) * 100);
-  useState(() => { fetch(GAS_URL, { method: "POST", body: JSON.stringify({ score, result_type: result.type, danger_level: result.danger, user_agent: navigator.userAgent }), mode: "no-cors" }).catch(() => {}); }, []);
+
   const cardRef = useRef(null);
   const [shared, setShared] = useState(false);
+
+  useEffect(() => {
+    fetch(GAS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ score, result_type: result.type, danger_level: result.danger, user_agent: navigator.userAgent })
+    }).catch(() => {});
+  }, []);
 
   const shareUrl = "https://claude.ai/public/artifacts/10d051bc-33b7-4026-bc86-b3a95fb0bd3b";
   const shareTextFull = `${result.shareText}\n\n3分で診断 👇\n${shareUrl}`;
