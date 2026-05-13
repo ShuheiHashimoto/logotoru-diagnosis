@@ -642,13 +642,13 @@ const ResultScreen = ({ score, onRestart }) => {
           padding: "14px 32px", textDecoration: "none",
           boxShadow: "0 0 24px rgba(249,115,22,0.4)",
         }}>
-          橋本と30分壁打ちする →
+          30分で御社の市場残存率を算出する（無料）→
         </a>
         <p style={{
           fontFamily: "'Noto Sans JP', sans-serif", fontSize: 11,
           color: "rgba(255,255,255,0.35)", marginTop: 12,
         }}>
-          無料・売り込み前提なし・データ持ち込み歓迎
+          無料・30分・BDRデータなしでもヒアリングで算出可能
         </p>
       </div>
 
