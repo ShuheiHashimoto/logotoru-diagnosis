@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 
+
+// GA4 event helper
+const gtag_event = (name, params = {}) => {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', name, params);
+  }
+};
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzzs98F0KjbeAZtQ07K3RtCdL8AeUrsVzvihAKXrONhb7KSmQDnQ37-0mer-sxtWWfESg/exec";
 
 const STEPS = [
@@ -390,7 +397,7 @@ const ResultScreen = ({ score, onRestart }) => {
   const [shared, setShared] = useState(false);
 
   useEffect(() => {
-    fetch(GAS_URL, {
+    gtag_event("diag_complete", { score, result_type: result.type, danger_level: result.danger }); fetch(GAS_URL, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "text/plain" },
@@ -635,7 +642,7 @@ const ResultScreen = ({ score, onRestart }) => {
           <span style={{ color: "#F97316" }}>今後6ヶ月の市場摩耗予測</span>を<br />
           無料で算出します。
         </p>
-        <a href="https://meetings-na2.hubspot.com/info12998" target="_blank" rel="noopener noreferrer" style={{
+        <a href="https://meetings-na2.hubspot.com/info12998" onClick={() => gtag_event("cta_click_hubspot", { result_type: result.type })} target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block", fontFamily: "'Noto Sans JP', sans-serif",
           fontWeight: 700, fontSize: 15, color: "#FFF",
           background: "#F97316", border: "none", borderRadius: 12,
@@ -672,7 +679,7 @@ const ResultScreen = ({ score, onRestart }) => {
         }}>
           具体的な数値を入力すると、3ヶ月後の有効会話率・商談数・リスト枯渇時期を予測できます。
         </p>
-        <a href="https://note.com/logotoru/n/n536f16992fea" target="_blank" rel="noopener noreferrer" style={{
+        <a href="https://note.com/logotoru/n/n536f16992fea" onClick={() => gtag_event("cta_click_note", { result_type: result.type })} target="_blank" rel="noopener noreferrer" style={{
           display: "inline-block", fontFamily: "'Noto Sans JP', sans-serif",
           fontWeight: 700, fontSize: 14, color: "#F97316",
           background: "rgba(249,115,22,0.1)",
